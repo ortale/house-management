@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Real Anthony Estate:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Real_Anthony_Estate_jar</output-path>
+    <root id="archive" name="Real Anthony Estate.jar">
+      <element id="module-output" name="Real Anthony Estate" />
+    </root>
+  </artifact>
+</component>
