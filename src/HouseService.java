@@ -48,6 +48,7 @@ public class HouseService {
             String[] keyValuePairs = jsonObject.split(",");
             int id = 0;
             String name = "";
+            String email = "";
 
             for (String pair : keyValuePairs) {
                 String[] entry = pair.split(":");
@@ -55,24 +56,29 @@ public class HouseService {
                     id = Integer.parseInt(entry[1].trim());
                 } else if (entry[0].trim().equals("name")) {
                     name = entry[1].trim();
+                } else if (entry[0].trim().equals("email")) {
+                    email = entry[1].trim();
                 }
+
+                if (id != 0 && !name.isEmpty() && !email.isEmpty()) break;
             }
             House house = new House();
             house.setId(id);
             house.setName(name);
+            house.setEmail(email);
             houses.add(house);
         }
         return houses;
     }
 
     public void addHouse(House house) throws Exception {
-        String jsonInputString = "{\"name\":\"" + house.getName() + "\"}";
+        String jsonInputString = "{\"name\":\"" + house.getName() + ",\"email\":\"" + house.getEmail() + "\"}";
         sendRequest(BASE_URL + "/", "POST", jsonInputString);
     }
 
     public void updateHouse(House house) throws Exception {
-        String jsonInputString = "{\"id\":" + house.getId() + ",\"name\":\"" + house.getName() + "\"}";
-        sendRequest(BASE_URL + "/update", "PUT", jsonInputString);
+        String jsonInputString = "{\"id\":" + house.getId() + ",\"name\":\"" + house.getName() + "\",\"email\":\"" + house.getEmail() + "\"}";
+        sendRequest(BASE_URL + "/" + house.getId(), "PUT", jsonInputString);
     }
 
     public void deleteHouse(int houseId) throws Exception {
@@ -80,8 +86,8 @@ public class HouseService {
     }
 
     public void addCertificate(int houseId, Certificate certificate) throws Exception {
-        String jsonInputString = "{\"name\":\"" + certificate.getName() + "\",\"date\":\"" + certificate.getIssueDate() + "\",\"expiryDate\":\"" + certificate.getExpireDate() + "\"}";
-        sendRequest(BASE_URL + "/" + houseId + "/certificates/add", "POST", jsonInputString);
+        String jsonInputString = "{\"name\":\"" + certificate.getName() + "\",\"date\":\"" + certificate.getIssueDate() + "\",\"houseId\":\"" + houseId + "\",\"expireDate\":\"" + certificate.getExpireDate() + "\"}";
+        sendRequest("http://localhost:3000/api" + "/certificates", "POST", jsonInputString);
     }
 
     public void updateCertificate(int houseId, Certificate certificate) throws Exception {

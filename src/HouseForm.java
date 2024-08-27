@@ -1,12 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class HouseForm extends JFrame {
     private JTextField nameField;
+    private JTextField emailField;  // Declare email field
     private JButton saveButton, cancelButton, addCertificateButton, addPaymentButton;
     private JList<Certificate> certificateList;
     private DefaultListModel<Certificate> certificateListModel;
@@ -29,10 +27,10 @@ public class HouseForm extends JFrame {
 
     private void setupUi() {
         setTitle(house == null ? "Add House" : "Edit House");
-        setSize(400, 400);
+        setSize(400, 450);  // Adjusted size to fit the new email field
         setLayout(new BorderLayout());
 
-        JPanel mainPanel = new JPanel(new GridLayout(4, 1));
+        JPanel mainPanel = new JPanel(new GridLayout(5, 1));  // Increased rows from 4 to 5
         add(mainPanel, BorderLayout.CENTER);
 
         // Name field
@@ -42,27 +40,45 @@ public class HouseForm extends JFrame {
         namePanel.add(nameField);
         mainPanel.add(namePanel);
 
-        // Certificate list
-        JPanel certificatePanel = new JPanel(new BorderLayout());
-        certificatePanel.setBorder(BorderFactory.createTitledBorder("Certificates"));
-        certificateListModel = new DefaultListModel<>();
-        certificateList = new JList<>(certificateListModel);
-        JScrollPane certificateScrollPane = new JScrollPane(certificateList);
-        certificatePanel.add(certificateScrollPane, BorderLayout.CENTER);
-        addCertificateButton = new JButton("Add Certificate");
-        certificatePanel.add(addCertificateButton, BorderLayout.SOUTH);
-        mainPanel.add(certificatePanel);
+        // Email field
+        JPanel emailPanel = new JPanel(new FlowLayout());
+        emailPanel.add(new JLabel("Email:"));
+        emailField = new JTextField(20);  // Initialize email field
+        emailPanel.add(emailField);
+        mainPanel.add(emailPanel);
 
-        // Payment list
-        JPanel paymentPanel = new JPanel(new BorderLayout());
-        paymentPanel.setBorder(BorderFactory.createTitledBorder("Payments"));
-        paymentListModel = new DefaultListModel<>();
-        paymentList = new JList<>(paymentListModel);
-        JScrollPane paymentScrollPane = new JScrollPane(paymentList);
-        paymentPanel.add(paymentScrollPane, BorderLayout.CENTER);
-        addPaymentButton = new JButton("Add Payment");
-        paymentPanel.add(addPaymentButton, BorderLayout.SOUTH);
-        mainPanel.add(paymentPanel);
+        if (house != null) {
+            // Certificate list
+            JPanel certificatePanel = new JPanel(new BorderLayout());
+            certificatePanel.setBorder(BorderFactory.createTitledBorder("Certificates"));
+            certificateListModel = new DefaultListModel<>();
+            certificateList = new JList<>(certificateListModel);
+            JScrollPane certificateScrollPane = new JScrollPane(certificateList);
+            certificatePanel.add(certificateScrollPane, BorderLayout.CENTER);
+            addCertificateButton = new JButton("Add Certificate");
+            certificatePanel.add(addCertificateButton, BorderLayout.SOUTH);
+            mainPanel.add(certificatePanel);
+
+            // Payment list
+            JPanel paymentPanel = new JPanel(new BorderLayout());
+            paymentPanel.setBorder(BorderFactory.createTitledBorder("Payments"));
+            paymentListModel = new DefaultListModel<>();
+            paymentList = new JList<>(paymentListModel);
+            JScrollPane paymentScrollPane = new JScrollPane(paymentList);
+            paymentPanel.add(paymentScrollPane, BorderLayout.CENTER);
+            addPaymentButton = new JButton("Add Payment");
+            paymentPanel.add(addPaymentButton, BorderLayout.SOUTH);
+            mainPanel.add(paymentPanel);
+
+            addCertificateButton.addActionListener(e -> {
+                CertificateForm certificateForm = new CertificateForm(this);
+                certificateForm.setVisible(true);
+            });
+            addPaymentButton.addActionListener(e -> {
+                PaymentForm paymentForm = new PaymentForm(this);
+                paymentForm.setVisible(true);
+            });
+        }
 
         // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -75,38 +91,35 @@ public class HouseForm extends JFrame {
         // Action listeners
         saveButton.addActionListener(e -> saveHouse());
         cancelButton.addActionListener(e -> dispose());
-        addCertificateButton.addActionListener(e -> {
-            CertificateForm certificateForm = new CertificateForm(this);
-            certificateForm.setVisible(true);
-        });
-        addPaymentButton.addActionListener(e -> {
-            PaymentForm paymentForm = new PaymentForm(this);
-            paymentForm.setVisible(true);
-        });
     }
 
     private void loadHouseDetails() {
         nameField.setText(house.getName());
+        emailField.setText(house.getEmail());  // Load the email address
 
-        // Load certificates
-        certificateListModel.clear();
-        for (Certificate certificate : house.getCertificates()) {
-            certificateListModel.addElement(certificate);
-        }
+        if (house != null && house.getCertificates() != null) {
+            // Load certificates
+            certificateListModel.clear();
+            for (Certificate certificate : house.getCertificates()) {
+                certificateListModel.addElement(certificate);
+            }
 
-        // Load payments
-        paymentListModel.clear();
-        for (Payment payment : house.getPayments()) {
-            paymentListModel.addElement(payment);
+            // Load payments
+            paymentListModel.clear();
+            for (Payment payment : house.getPayments()) {
+                paymentListModel.addElement(payment);
+            }
         }
     }
 
     private void saveHouse() {
         String name = nameField.getText();
+        String email = emailField.getText();  // Get the email address
 
         if (house == null) {
             house = new House();
             house.setName(name);
+            house.setEmail(email);  // Set the email address
             house.setCertificates(new ArrayList<>());
             house.setPayments(new ArrayList<>());
             try {
@@ -116,6 +129,7 @@ public class HouseForm extends JFrame {
             }
         } else {
             house.setName(name);
+            house.setEmail(email);  // Update the email address
             try {
                 houseService.updateHouse(house);
             } catch (Exception e) {

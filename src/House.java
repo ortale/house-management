@@ -1,10 +1,12 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class House {
     private int id;
     private String name;
-    private List<Certificate> certificates;
-    private List<Payment> payments;
+    private String email;
+    private List<Certificate> certificates = new ArrayList<>();
+    private List<Payment> payments = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -20,6 +22,14 @@ public class House {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Certificate> getCertificates() {

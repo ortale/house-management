@@ -10,25 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4cd0c110-0f0f-4ff4-962f-c7e600424cc8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Real_Anthony_Estate_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Real Anthony Estate.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AddHouseHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Certificate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CertificateForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GetAllHousesHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/House.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HouseForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HouseService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HouseUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PaymentForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SimpleHttpServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Certificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Certificate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CertificateForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CertificateForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/House.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/House.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HouseForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HouseForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HouseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HouseService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,10 +45,10 @@
   "keyToString": {
     "Application.HouseUI.executor": "Run",
     "Application.Main.executor": "Run",
-    "Application.Unnamed.executor": "Run",
+    "Application.Unnamed.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/joseortale/Documents/dev/other/Real Anthony Estate",
     "project.structure.last.edited": "Artifacts",
@@ -94,10 +81,21 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/HouseService.java</url>
-          <line>69</line>
+          <line>75</line>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/HouseService.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="&quot;http://localhost:3000/api&quot; + &quot;/certificates&quot;" />
+        <watch expression="dateField.getValue().toString()" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

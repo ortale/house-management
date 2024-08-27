@@ -1,8 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class CertificateForm extends JFrame {
     private JTextField nameField;
@@ -55,7 +54,14 @@ public class CertificateForm extends JFrame {
         Date date = (Date) dateField.getValue();
         Date expireDate = (Date) expireDateField.getValue();
 
-        Certificate certificate = new Certificate(name, date, expireDate);
+        // Define the date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Format the dates
+        String formattedDate = dateFormat.format(date);
+        String formattedExpireDate = dateFormat.format(expireDate);
+
+        Certificate certificate = new Certificate(name, formattedDate, formattedExpireDate);
         parent.addCertificate(certificate);
         dispose();
     }

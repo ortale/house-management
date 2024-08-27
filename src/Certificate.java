@@ -1,13 +1,11 @@
-import java.util.Date;
-
 public class Certificate {
     private Integer id;
     private String name;
-    private Date issueDate;
-    private Date expireDate;
+    private String issueDate;
+    private String expireDate;
 
     // Constructors, getters, setters
-    public Certificate(String name, Date issueDate, Date expireDate) {
+    public Certificate(String name, String issueDate, String expireDate) {
         this.name = name;
         this.issueDate = issueDate;
         this.expireDate = expireDate;
@@ -21,19 +19,19 @@ public class Certificate {
         this.name = name;
     }
 
-    public Date getIssueDate() {
+    public String getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(String issueDate) {
         this.issueDate = issueDate;
     }
 
-    public Date getExpireDate() {
+    public String getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(Date expireDate) {
+    public void setExpireDate(String expireDate) {
         this.expireDate = expireDate;
     }
 
@@ -43,5 +41,10 @@ public class Certificate {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
