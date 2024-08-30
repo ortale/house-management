@@ -1,11 +1,13 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HouseService {
-    private static final String BASE_URL = "http://localhost:3000/api/houses";
+    private static final String BASE_URL = "http://localhost:3000/api";
 
     private String sendRequest(String endpoint, String method, String jsonInputString) throws Exception {
         URL url = new URL(endpoint);
@@ -37,61 +39,37 @@ public class HouseService {
     }
 
     public List<House> getAllHouses() throws Exception {
-        String response = sendRequest(BASE_URL + "/", "GET", null);
-        List<House> houses = new ArrayList<>();
+        String response = sendRequest(BASE_URL + "/houses", "GET", null);
 
-        // Basic manual parsing of JSON
-        // Adjust parsing code according to your actual JSON structure
-        String[] jsonObjects = response.substring(1, response.length() - 1).split("\\},\\{"); // Split the JSON array
-        for (String jsonObject : jsonObjects) {
-            jsonObject = jsonObject.replace("{", "").replace("}", "").replace("\"", "");
-            String[] keyValuePairs = jsonObject.split(",");
-            int id = 0;
-            String name = "";
-            String email = "";
+        // Use Jackson ObjectMapper to parse the JSON response
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<House> houses = objectMapper.readValue(response, new TypeReference<>() {
+        });
 
-            for (String pair : keyValuePairs) {
-                String[] entry = pair.split(":");
-                if (entry[0].trim().equals("id")) {
-                    id = Integer.parseInt(entry[1].trim());
-                } else if (entry[0].trim().equals("name")) {
-                    name = entry[1].trim();
-                } else if (entry[0].trim().equals("email")) {
-                    email = entry[1].trim();
-                }
-
-                if (id != 0 && !name.isEmpty() && !email.isEmpty()) break;
-            }
-            House house = new House();
-            house.setId(id);
-            house.setName(name);
-            house.setEmail(email);
-            houses.add(house);
-        }
         return houses;
     }
 
     public void addHouse(House house) throws Exception {
-        String jsonInputString = "{\"name\":\"" + house.getName() + ",\"email\":\"" + house.getEmail() + "\"}";
-        sendRequest(BASE_URL + "/", "POST", jsonInputString);
+        String jsonInputString = "{\"name\":\"" + house.getName() + ",\"email\":\"" + house.getEmail() + "\",\"astExpDate\":\"" + house.getAstExpDate() + "\"}";
+        sendRequest(BASE_URL + "/houses", "POST", jsonInputString);
     }
 
     public void updateHouse(House house) throws Exception {
-        String jsonInputString = "{\"id\":" + house.getId() + ",\"name\":\"" + house.getName() + "\",\"email\":\"" + house.getEmail() + "\"}";
-        sendRequest(BASE_URL + "/" + house.getId(), "PUT", jsonInputString);
+        String jsonInputString = "{\"id\":" + house.getId() + ",\"name\":\"" + house.getName() + "\",\"email\":\"" + house.getEmail() + "\",\"astExpDate\":\"" + house.getAstExpDate() + "\"}";
+        sendRequest(BASE_URL + "/houses/" + house.getId(), "PUT", jsonInputString);
     }
 
     public void deleteHouse(int houseId) throws Exception {
-        sendRequest(BASE_URL + "/delete?id=" + houseId, "DELETE", null);
+        sendRequest(BASE_URL + "/houses/delete?id=" + houseId, "DELETE", null);
     }
 
     public void addCertificate(int houseId, Certificate certificate) throws Exception {
-        String jsonInputString = "{\"name\":\"" + certificate.getName() + "\",\"date\":\"" + certificate.getIssueDate() + "\",\"houseId\":\"" + houseId + "\",\"expireDate\":\"" + certificate.getExpireDate() + "\"}";
-        sendRequest("http://localhost:3000/api" + "/certificates", "POST", jsonInputString);
+        String jsonInputString = "{\"name\":\"" + certificate.getName() + "\",\"date\":\"" + certificate.getDate() + "\",\"houseId\":\"" + houseId + "\",\"expireDate\":\"" + certificate.getExpireDate() + "\"}";
+        sendRequest(BASE_URL + "/certificates", "POST", jsonInputString);
     }
 
     public void updateCertificate(int houseId, Certificate certificate) throws Exception {
-        String jsonInputString = "{\"id\":" + certificate.getId() + ",\"name\":\"" + certificate.getName() + "\",\"date\":\"" + certificate.getIssueDate() + "\",\"expiryDate\":\"" + certificate.getExpireDate() + "\"}";
+        String jsonInputString = "{\"id\":" + certificate.getId() + ",\"name\":\"" + certificate.getName() + "\",\"date\":\"" + certificate.getDate() + "\",\"expiryDate\":\"" + certificate.getExpireDate() + "\"}";
         sendRequest(BASE_URL + "/" + houseId + "/certificates/update", "PUT", jsonInputString);
     }
 

@@ -6,6 +6,9 @@ public class Payment {
     private Date paymentDate;
     private Date dueDate;
 
+    public Payment() {
+    }
+
     // Constructors, getters, setters
     public Payment(String description, Date paymentDate, Date dueDate) {
         this.description = description;

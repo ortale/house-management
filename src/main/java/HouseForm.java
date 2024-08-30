@@ -1,10 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HouseForm extends JFrame {
     private JTextField nameField;
     private JTextField emailField;  // Declare email field
+    private JSpinner astExpirationField; // Declare AST expiration field
     private JButton saveButton, cancelButton, addCertificateButton, addPaymentButton;
     private JList<Certificate> certificateList;
     private DefaultListModel<Certificate> certificateListModel;
@@ -46,6 +53,15 @@ public class HouseForm extends JFrame {
         emailField = new JTextField(20);  // Initialize email field
         emailPanel.add(emailField);
         mainPanel.add(emailPanel);
+
+        // AST Expiration field
+        JPanel astExpirationPanel = new JPanel(new FlowLayout());
+        astExpirationPanel.add(new JLabel("AST Expiration Date:"));
+        astExpirationField = new JSpinner(new SpinnerDateModel());  // Initialize AST expiration field
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(astExpirationField, "dd/MM/yyyy");
+        astExpirationField.setEditor(dateEditor);
+        astExpirationPanel.add(astExpirationField);
+        mainPanel.add(astExpirationPanel);
 
         if (house != null) {
             // Certificate list
@@ -97,6 +113,21 @@ public class HouseForm extends JFrame {
         nameField.setText(house.getName());
         emailField.setText(house.getEmail());  // Load the email address
 
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+        if (house.getAstExpDate() != null) {
+            // Parse the ISO 8601 date-time string
+            ZonedDateTime zonedDateTime = ZonedDateTime.parse(house.getAstExpDate(), formatter);
+
+            // Convert ZonedDateTime to LocalDate
+            LocalDate localDate = zonedDateTime.toLocalDate();
+
+            // Convert LocalDate to Date (in UTC)
+            ZonedDateTime startOfDay = localDate.atStartOfDay(ZoneId.of("UTC"));
+            Date date = Date.from(startOfDay.toInstant());
+            astExpirationField.setValue(date);
+        }
+
         if (house != null && house.getCertificates() != null) {
             // Load certificates
             certificateListModel.clear();
@@ -115,11 +146,20 @@ public class HouseForm extends JFrame {
     private void saveHouse() {
         String name = nameField.getText();
         String email = emailField.getText();  // Get the email address
+        Date astExpirationDate = (Date) astExpirationField.getValue();  // Get the AST expiration date
+
+        // Define the date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Format the dates
+        String formattedDate = dateFormat.format(astExpirationDate);
 
         if (house == null) {
             house = new House();
             house.setName(name);
             house.setEmail(email);  // Set the email address
+
+            house.setAstExpDate(formattedDate);  // Set the AST expiration date
             house.setCertificates(new ArrayList<>());
             house.setPayments(new ArrayList<>());
             try {
@@ -130,6 +170,7 @@ public class HouseForm extends JFrame {
         } else {
             house.setName(name);
             house.setEmail(email);  // Update the email address
+            house.setAstExpDate(formattedDate);  // Update the AST expiration date
             try {
                 houseService.updateHouse(house);
             } catch (Exception e) {

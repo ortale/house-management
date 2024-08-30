@@ -1,13 +1,18 @@
 public class Certificate {
     private Integer id;
     private String name;
-    private String issueDate;
+    private String date;
     private String expireDate;
+    private Integer houseId;
+    private Integer emailSent;
+
+    public Certificate() {
+    }
 
     // Constructors, getters, setters
-    public Certificate(String name, String issueDate, String expireDate) {
+    public Certificate(String name, String date, String expireDate) {
         this.name = name;
-        this.issueDate = issueDate;
+        this.date = date;
         this.expireDate = expireDate;
     }
 
@@ -19,12 +24,12 @@ public class Certificate {
         this.name = name;
     }
 
-    public String getIssueDate() {
-        return issueDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setIssueDate(String issueDate) {
-        this.issueDate = issueDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getExpireDate() {
@@ -46,5 +51,21 @@ public class Certificate {
     @Override
     public String toString() {
         return name;
+    }
+
+    public Integer getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(Integer houseId) {
+        this.houseId = houseId;
+    }
+
+    public Integer getEmailSent() {
+        return emailSent;
+    }
+
+    public void setEmailSent(Integer emailSent) {
+        this.emailSent = emailSent;
     }
 }

@@ -28,13 +28,13 @@ public class CertificateForm extends JFrame {
 
         mainPanel.add(new JLabel("Date:"));
         dateField = new JSpinner(new SpinnerDateModel());
-        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateField, "yyyy-MM-dd");
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateField, "dd/MM/yyyy");
         dateField.setEditor(dateEditor);
         mainPanel.add(dateField);
 
         mainPanel.add(new JLabel("Expire Date:"));
         expireDateField = new JSpinner(new SpinnerDateModel());
-        JSpinner.DateEditor expireDateEditor = new JSpinner.DateEditor(expireDateField, "yyyy-MM-dd");
+        JSpinner.DateEditor expireDateEditor = new JSpinner.DateEditor(expireDateField, "dd/MM/yyyy");
         expireDateField.setEditor(expireDateEditor);
         mainPanel.add(expireDateField);
 

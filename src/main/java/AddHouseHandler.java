@@ -9,7 +9,12 @@ public class AddHouseHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         if ("POST".equals(exchange.getRequestMethod())) {
             InputStream is = exchange.getRequestBody();
-            String requestBody = new String(is.readAllBytes());
+            StringBuilder sb = new StringBuilder();
+            int ch;
+            while ((ch = is.read()) != -1) {
+                sb.append((char) ch);
+            }
+            String requestBody = sb.toString();
             System.out.println("Received data: " + requestBody);
             String response = "House added";
             exchange.sendResponseHeaders(200, response.getBytes().length);

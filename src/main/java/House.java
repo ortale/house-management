@@ -5,6 +5,7 @@ public class House {
     private int id;
     private String name;
     private String email;
+    private String astExpDate;
     private List<Certificate> certificates = new ArrayList<>();
     private List<Payment> payments = new ArrayList<>();
 
@@ -46,6 +47,14 @@ public class House {
 
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
+    }
+
+    public String getAstExpDate() {
+        return astExpDate;
+    }
+
+    public void setAstExpDate(String astExpDate) {
+        this.astExpDate = astExpDate;
     }
 
     @Override
