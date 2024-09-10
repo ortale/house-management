@@ -10,23 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4cd0c110-0f0f-4ff4-962f-c7e600424cc8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Real Anthony Estate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Real Anthony Estate.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AddHouseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AddHouseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Certificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Certificate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CertificateForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CertificateForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GetAllHousesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GetAllHousesHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/House.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/House.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HouseForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HouseForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HouseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HouseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HouseUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HouseUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PaymentForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PaymentForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimpleHttpServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SimpleHttpServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/HouseForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HouseForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/HouseForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/HouseForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/HouseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/HouseService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,11 +92,6 @@
           <line>168</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/HouseForm.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -117,6 +99,7 @@
         <watch expression="&quot;http://localhost:3000/api&quot; + &quot;/certificates&quot;" />
         <watch expression="dateField.getValue().toString()" />
         <watch expression="house.getAstExpirationDate()" />
+        <watch expression="house.getCertificates()" />
       </configuration>
     </watches-manager>
   </component>

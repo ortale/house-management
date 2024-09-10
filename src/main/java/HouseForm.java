@@ -3,7 +3,6 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -116,15 +115,8 @@ public class HouseForm extends JFrame {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
 
         if (house.getAstExpDate() != null) {
-            // Parse the ISO 8601 date-time string
-            ZonedDateTime zonedDateTime = ZonedDateTime.parse(house.getAstExpDate(), formatter);
-
-            // Convert ZonedDateTime to LocalDate
-            LocalDate localDate = zonedDateTime.toLocalDate();
-
-            // Convert LocalDate to Date (in UTC)
-            ZonedDateTime startOfDay = localDate.atStartOfDay(ZoneId.of("UTC"));
-            Date date = Date.from(startOfDay.toInstant());
+            LocalDate localDate = LocalDate.parse(house.getAstExpDate(), formatter);
+            Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             astExpirationField.setValue(date);
         }
 
