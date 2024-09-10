@@ -50,7 +50,7 @@ public class HouseService {
     }
 
     public void addHouse(House house) throws Exception {
-        String jsonInputString = "{\"name\":\"" + house.getName() + ",\"email\":\"" + house.getEmail() + "\",\"astExpDate\":\"" + house.getAstExpDate() + "\"}";
+        String jsonInputString = "{\"name\":\"" + house.getName() + "\",\"email\":\"" + house.getEmail() + "\",\"astExpDate\":\"" + house.getAstExpDate() + "\"}";
         sendRequest(BASE_URL + "/houses", "POST", jsonInputString);
     }
 
