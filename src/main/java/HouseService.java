@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.List;
 
 public class HouseService {
-    private static final String BASE_URL = "http://localhost:3000/api";
+    private static final String BASE_URL = "https://realanthonyestate.co.uk/house-management-backend/api";
 
     private String sendRequest(String endpoint, String method, String jsonInputString) throws Exception {
         URL url = new URL(endpoint);
