@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.List;
 
 public class HouseService {
+//    private static final String BASE_URL = "http://localhost:3000/api";
     private static final String BASE_URL = "https://realanthonyestate.co.uk/house-management-backend/api";
 
     private String sendRequest(String endpoint, String method, String jsonInputString) throws Exception {
@@ -78,13 +79,13 @@ public class HouseService {
     }
 
     public void addPayment(int houseId, Payment payment) throws Exception {
-        String jsonInputString = "{\"description\":\"" + payment.getDescription() + "\",\"date\":\"" + payment.getPaymentDate() + "\",\"dueDate\":\"" + payment.getDueDate() + "\"}";
-        sendRequest(BASE_URL + "/" + houseId + "/payments/add", "POST", jsonInputString);
+        String jsonInputString = "{\"status\":\"" + payment.getStatus() + "\",\"paymentDate\":\"" + payment.getPaymentDate() + "\",\"houseId\":\"" + houseId + "\",\"rentAmount\":\"" + payment.getRentAmount() + "\",\"feeAmount\":\"" + payment.getFeeAmount() + "\",\"dueDate\":\"" + payment.getDueDate() + "\"}";
+        sendRequest(BASE_URL + "/payments", "POST", jsonInputString);
     }
 
     public void updatePayment(int houseId, Payment payment) throws Exception {
-        String jsonInputString = "{\"id\":" + payment.getId() + ",\"description\":\"" + payment.getDescription() + "\",\"date\":\"" + payment.getPaymentDate() + "\",\"dueDate\":\"" + payment.getDueDate() + "\"}";
-        sendRequest(BASE_URL + "/" + houseId + "/payments/update", "PUT", jsonInputString);
+        String jsonInputString = "{\"status\":\"" + payment.getStatus() + "\",\"id\":\"" + payment.getId() + "\",\"paymentDate\":\"" + payment.getPaymentDate() + "\",\"houseId\":\"" + houseId + "\",\"rentAmount\":\"" + payment.getRentAmount() + "\",\"feeAmount\":\"" + payment.getFeeAmount() + "\",\"dueDate\":\"" + payment.getDueDate() + "\"}";
+        sendRequest(BASE_URL +  "/payments/" + payment.getId(), "PUT", jsonInputString);
     }
 
     public void deletePayment(int houseId, int paymentId) throws Exception {

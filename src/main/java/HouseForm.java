@@ -1,8 +1,10 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,10 +13,13 @@ public class HouseForm extends JFrame {
     private JTextField nameField;
     private JTextField emailField;  // Declare email field
     private JSpinner astExpirationField; // Declare AST expiration field
-    private JButton saveButton, cancelButton, addCertificateButton, addPaymentButton;
+    private JButton saveButton;
+    private JButton cancelButton;
+    private JButton addCertificateButton;
+    private JButton addPaymentButton;
     private JList<Certificate> certificateList;
     private DefaultListModel<Certificate> certificateListModel;
-    private JList<Payment> paymentList;
+    private DefaultTableModel tableModel;
     private DefaultListModel<Payment> paymentListModel;
     private HouseService houseService;
     private House house;
@@ -33,10 +38,11 @@ public class HouseForm extends JFrame {
 
     private void setupUi() {
         setTitle(house == null ? "Add House" : "Edit House");
-        setSize(400, 450);  // Adjusted size to fit the new email field
+        setSize(400, 1000);  // Adjusted size to fit the new email field
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        JPanel mainPanel = new JPanel(new GridLayout(5, 1));  // Increased rows from 4 to 5
+        JPanel mainPanel = new JPanel(new GridLayout(8, 1));  // Increased rows from 4 to 5
         add(mainPanel, BorderLayout.CENTER);
 
         // Name field
@@ -53,7 +59,7 @@ public class HouseForm extends JFrame {
         emailPanel.add(emailField);
         mainPanel.add(emailPanel);
 
-        // AST Expiration field
+        // Invoice AST Expiration field
         JPanel astExpirationPanel = new JPanel(new FlowLayout());
         astExpirationPanel.add(new JLabel("AST Expiration Date:"));
         astExpirationField = new JSpinner(new SpinnerDateModel());  // Initialize AST expiration field
@@ -75,14 +81,40 @@ public class HouseForm extends JFrame {
             mainPanel.add(certificatePanel);
 
             // Payment list
+//            JPanel paymentPanel = new JPanel(new BorderLayout());
+//            paymentPanel.setBorder(BorderFactory.createTitledBorder("Payments"));
+//            paymentPanel.setSize(200,500);
+//            paymentListModel = new DefaultListModel<>();
+//            paymentList = new JList<>(paymentListModel);
+//            JScrollPane paymentScrollPane = new JScrollPane(paymentList);
+//            paymentPanel.add(paymentScrollPane, BorderLayout.CENTER);
+//            addPaymentButton = new JButton("Add Payment");
+//            paymentPanel.add(addPaymentButton, BorderLayout.SOUTH);
+//            mainPanel.add(paymentPanel);
+
+            // Payment list
             JPanel paymentPanel = new JPanel(new BorderLayout());
             paymentPanel.setBorder(BorderFactory.createTitledBorder("Payments"));
-            paymentListModel = new DefaultListModel<>();
-            paymentList = new JList<>(paymentListModel);
-            JScrollPane paymentScrollPane = new JScrollPane(paymentList);
-            paymentPanel.add(paymentScrollPane, BorderLayout.CENTER);
+            paymentPanel.setSize(200, 500);
+
+            // Define table headers
+            String[] columnNames = {"Rent Amount", "Fee", "Status"};
+
+            // Create the table model
+            tableModel = new DefaultTableModel(columnNames, 0); // Initially empty
+
+            // Create the JTable with the populated model
+            JTable paymentTable = new JTable(tableModel);
+
+            // Add the table to a scroll pane
+            JScrollPane tableScrollPane = new JScrollPane(paymentTable);
+            paymentPanel.add(tableScrollPane, BorderLayout.CENTER);
+
+            // Add button for adding payments
             addPaymentButton = new JButton("Add Payment");
             paymentPanel.add(addPaymentButton, BorderLayout.SOUTH);
+
+            // Add the payment panel to the main panel
             mainPanel.add(paymentPanel);
 
             addCertificateButton.addActionListener(e -> {
@@ -126,12 +158,53 @@ public class HouseForm extends JFrame {
             for (Certificate certificate : house.getCertificates()) {
                 certificateListModel.addElement(certificate);
             }
+        }
+
+        if (house != null && house.getPayments() != null) {
+            paymentListModel = new DefaultListModel<>();
 
             // Load payments
             paymentListModel.clear();
             for (Payment payment : house.getPayments()) {
                 paymentListModel.addElement(payment);
             }
+
+            // Populate the table model from paymentListModel
+            for (int i = 0; i < paymentListModel.size(); i++) {
+                Payment payment = paymentListModel.getElementAt(i);
+                Object[] row = {payment.getRentAmount(), payment.getFeeAmount(), payment.getStatus()};
+                tableModel.addRow(row);
+            }
+
+            // Add a TableModelListener to capture changes
+            tableModel.addTableModelListener(event -> {
+                int row = event.getFirstRow();  // Row where the change occurred
+                int column = event.getColumn(); // Column where the change occurred
+
+                if (column >= 0) { // Ensure it's not a structural change
+                    Object newValue = tableModel.getValueAt(row, column); // Get the updated value
+                    String columnName = tableModel.getColumnName(column); // Get column name
+
+                    System.out.println("Value changed at row: " + row + ", column: " + columnName + " (index " + column + ")");
+                    System.out.println("New value: " + newValue);
+
+                    Payment payment = paymentListModel.getElementAt(row);
+
+                    switch (column) {
+                        case 0: // Rent Amount
+                            payment.setRentAmount(Double.valueOf(newValue.toString())); // Adjust type as needed
+                            break;
+                        case 1: // Fee
+                            payment.setFeeAmount(Double.valueOf(newValue.toString())); // Adjust type as needed
+                            break;
+                        case 2: // Status
+                            payment.setStatus((String) newValue); // Adjust type as needed
+                            break;
+                    }
+
+                    updatePayment(payment);
+                }
+            });
         }
     }
 
@@ -189,6 +262,30 @@ public class HouseForm extends JFrame {
         house.getPayments().add(payment);
         try {
             houseService.addPayment(house.getId(), payment);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void updatePayment(Payment payment) {
+        try {
+            // Parse the ISO 8601 string
+            ZonedDateTime zonedPaymentDateTime = ZonedDateTime.parse(payment.getPaymentDate());
+            ZonedDateTime zonedDueDateTime = ZonedDateTime.parse(payment.getDueDate());
+
+            // Convert ZonedDateTime to Date
+            Date paymentDate = Date.from(zonedPaymentDateTime.toInstant());
+            Date dueDate = Date.from(zonedDueDateTime.toInstant());
+
+            // Define the date format
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            // Format the dates
+            String formattedPaymentDate = dateFormat.format(paymentDate);
+            String formattedDueDate = dateFormat.format(dueDate);
+            payment.setPaymentDate(formattedPaymentDate);
+            payment.setDueDate(formattedDueDate);
+            houseService.updatePayment(house.getId(), payment);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

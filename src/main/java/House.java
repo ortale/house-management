@@ -6,6 +6,9 @@ public class House {
     private String name;
     private String email;
     private String astExpDate;
+    private Double invoiceAmount;
+    private Double rentAmount;
+    private String feeInvoiceDate;
     private List<Certificate> certificates = new ArrayList<>();
     private List<Payment> payments = new ArrayList<>();
 
@@ -60,5 +63,29 @@ public class House {
     @Override
     public String toString() {
         return name;
+    }
+
+    public Double getInvoiceAmount() {
+        return invoiceAmount;
+    }
+
+    public void setInvoiceAmount(Double invoiceAmount) {
+        this.invoiceAmount = invoiceAmount;
+    }
+
+    public Double getRentAmount() {
+        return rentAmount;
+    }
+
+    public void setRentAmount(Double rentAmount) {
+        this.rentAmount = rentAmount;
+    }
+
+    public String getFeeInvoiceDate() {
+        return feeInvoiceDate;
+    }
+
+    public void setFeeInvoiceDate(String feeInvoiceDate) {
+        this.feeInvoiceDate = feeInvoiceDate;
     }
 }

@@ -1,11 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PaymentForm extends JFrame {
-    private JTextField descriptionField;
+    private JTextField feeInvoiceField;  // Declare email field
+    private JTextField rentAmountField;  // Declare email field
+    private JTextField statusField;  // Declare email field
     private JSpinner paymentDateField, dueDateField;
     private JButton saveButton, cancelButton;
     private HouseForm parent;
@@ -17,15 +18,32 @@ public class PaymentForm extends JFrame {
 
     private void setupUi() {
         setTitle("Add Payment");
-        setSize(300, 200);
+        setSize(300, 800);
         setLayout(new BorderLayout());
 
-        JPanel mainPanel = new JPanel(new GridLayout(3, 2));
+        JPanel mainPanel = new JPanel(new GridLayout(8, 1));
         add(mainPanel, BorderLayout.CENTER);
 
-        mainPanel.add(new JLabel("Description:"));
-        descriptionField = new JTextField(20);
-        mainPanel.add(descriptionField);
+        // Rent field
+        JPanel rentAmountPanel = new JPanel(new FlowLayout());
+        rentAmountPanel.add(new JLabel("Rent Amount:"));
+        rentAmountField = new JTextField(20);  // Initialize email field
+        rentAmountPanel.add(rentAmountField);
+        mainPanel.add(rentAmountPanel);
+
+        // Invoice field
+        JPanel feeInvoicePanel = new JPanel(new FlowLayout());
+        feeInvoicePanel.add(new JLabel("Fee Amount:"));
+        feeInvoiceField = new JTextField(20);  // Initialize email field
+        feeInvoicePanel.add(feeInvoiceField);
+        mainPanel.add(feeInvoicePanel);
+
+        // Status field
+        JPanel statusPanel = new JPanel(new FlowLayout());
+        statusPanel.add(new JLabel("Status:"));
+        statusField = new JTextField(20);  // Initialize status field
+        statusPanel.add(statusField);
+        mainPanel.add(statusPanel);
 
         mainPanel.add(new JLabel("Payment Date:"));
         paymentDateField = new JSpinner(new SpinnerDateModel());
@@ -51,11 +69,20 @@ public class PaymentForm extends JFrame {
     }
 
     private void savePayment() {
-        String description = descriptionField.getText();
         Date paymentDate = (Date) paymentDateField.getValue();
         Date dueDate = (Date) dueDateField.getValue();
+        Double rentAmount = Double.valueOf(rentAmountField.getText());
+        Double feeAmount = Double.valueOf(feeInvoiceField.getText());
+        String status = statusField.getText();
 
-        Payment payment = new Payment(description, paymentDate, dueDate);
+        // Define the date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Format the dates
+        String formattedPaymentDate = dateFormat.format(paymentDate);
+        String formattedDueDate = dateFormat.format(dueDate);
+
+        Payment payment = new Payment(formattedPaymentDate, formattedDueDate, rentAmount, feeAmount, status);
         parent.addPayment(payment);
         dispose();
     }

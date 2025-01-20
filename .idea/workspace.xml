@@ -11,7 +11,13 @@
   <component name="ChangeListManager">
     <list default="true" id="4cd0c110-0f0f-4ff4-962f-c7e600424cc8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/House.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/House.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/HouseForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HouseForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/HouseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HouseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/PaymentForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PaymentForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/House.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/House.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/HouseForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/HouseForm.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/HouseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/HouseService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,21 +44,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HouseUI.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/joseortale/Documents/dev/other/Real Anthony Estate&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HouseUI.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/joseortale/Documents/dev/other/Real Anthony Estate",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="HouseUI" />
@@ -77,18 +83,8 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/HouseService.java</url>
-          <line>75</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/HouseService.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/HouseForm.java</url>
-          <line>168</line>
+          <line>241</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
@@ -96,9 +92,8 @@
     <watches-manager>
       <configuration name="Application">
         <watch expression="&quot;http://localhost:3000/api&quot; + &quot;/certificates&quot;" />
-        <watch expression="dateField.getValue().toString()" />
-        <watch expression="house.getAstExpirationDate()" />
         <watch expression="house.getCertificates()" />
+        <watch expression="paymentListModel.getElementAt(row);" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
